@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://cellionyx.com/sitemap.xml
+
+# Block access to admin and private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+Disallow: /cgi-bin/
+
+# Allow CSS and JS files for SEO
+Allow: /css/
+Allow: /js/
+Allow: /images/
+
+# Crawl delay (optional - can be removed if not needed)
+Crawl-delay: 1

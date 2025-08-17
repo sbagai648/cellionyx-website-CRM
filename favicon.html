@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <canvas id="canvas" width="32" height="32"></canvas>
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Fill background with Cellionyx blue
+        ctx.fillStyle = '#4a9eff';
+        ctx.fillRect(0, 0, 32, 32);
+        
+        // Add white "C" letter
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 24px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('C', 16, 17);
+        
+        // Convert to favicon
+        canvas.toBlob(function(blob) {
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = URL.createObjectURL(blob);
+            document.body.appendChild(link);
+            link.click();
+        });
+    </script>
+    <p>Open this file in a browser to generate favicon.png</p>
+</body>
+</html>

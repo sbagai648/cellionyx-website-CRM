@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellionyx Admin Dashboard</title>
+</head>
+<body>
+    <h1>Cellionyx Admin Dashboard</h1>
+    <div id="content">Loading...</div>
+    
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAwG25XTyUN6r37piZRfONJW8_yNgjkgYM",
+            authDomain: "cellionyx-crm.firebaseapp.com",
+            projectId: "cellionyx-crm",
+            storageBucket: "cellionyx-crm.appspot.com",
+            messagingSenderId: "506127643002",
+            appId: "1:506127643002:web:d3dd3b6c7e5c4e5f6f7f8f"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        
+        // Redirect to full portal
+        window.location.href = 'index.html';
+    </script>
+</body>
+</html>

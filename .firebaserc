@@ -1,0 +1,11 @@
+{
+  "projects": {
+    "default": "cellionyx-crm"
+  },
+  "targets": {},
+  "etags": {
+    "cellionyx-crm": {
+      "extensionInstances": {}
+    }
+  }
+}
