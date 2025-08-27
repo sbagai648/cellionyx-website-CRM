@@ -1,0 +1,8 @@
+    <!-- CTA Form Modal -->
+    <div id="ctaModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto; margin: 20px auto;">
+            <div class="modal-header">
+                <h2 id="ctaModalTitle">Request a Demo</h2>
+                <p id="ctaModalSubtitle" style="margin: 5px 0; color: #999;">See Cellionyx technology in action</p>
+                <span class="close" id="closeModal">&times;</span>
+            </div>

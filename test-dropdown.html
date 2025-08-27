@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Phone Dropdown</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    <style>
+        body {
+            padding: 50px;
+            background: #1a1a1a;
+            color: white;
+        }
+        input {
+            width: 300px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Phone Dropdown - Minimal Setup</h1>
+    <input id="phone" type="tel" placeholder="Phone number">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        const input = document.querySelector("#phone");
+        const iti = window.intlTelInput(input, {
+            initialCountry: "us",
+            preferredCountries: ["us", "ca", "gb", "au"],
+            separateDialCode: true,
+            allowDropdown: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        });
+        
+        console.log('Phone field initialized');
+        
+        // Test if we can manually trigger the dropdown
+        setTimeout(() => {
+            const flagButton = document.querySelector('.iti__selected-flag');
+            if (flagButton) {
+                console.log('Flag button found, adding test handler');
+                flagButton.addEventListener('click', function() {
+                    console.log('Flag clicked!');
+                });
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

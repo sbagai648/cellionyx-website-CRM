@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cellionyx Sales Portal - CRM Dashboard</title>
+    <link rel="icon" type="image/svg+xml" href="../images/favicon.svg">
+    <link rel="stylesheet" href="css/portal-styles-enhanced.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Encode+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="login-screen">
+        <div class="login-container">
+            <div class="login-header">
+                <img src="../images/cellionyx-logo.png" alt="Cellionyx Logo" class="login-logo">
+                <h1 class="login-title">Sales Portal</h1>
+                <p class="login-subtitle">Access your CRM dashboard and manage prospects</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required class="form-input">
+                </div>
+
+                <div class="form-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required class="form-input">
+                </div>
+
+                <button type="submit" class="btn btn-primary login-button">
+                    <span class="button-text">Sign In</span>
+                    <span class="button-loading" style="display: none;">Signing In...</span>
+                </button>
+
+                <div id="loginError" class="error-message" style="display: none;"></div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Dashboard -->
+    <div id="dashboard" class="dashboard" style="display: none;">
+        <!-- Navigation Header -->
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <img src="../images/cellionyx-logo.png" alt="Cellionyx Logo" class="header-logo">
+                    <h1 class="header-title">Sales Portal</h1>
+                </div>
+                
+                <div class="header-right">
+                    <div class="user-info">
+                        <div class="user-avatar">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                                <path d="M7 20a5 5 0 0 1 10 0" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="user-details">
+                            <span id="userWelcome" class="user-welcome">Welcome, User</span>
+                            <span id="userRole" class="user-role">Sales Rep</span>
+                        </div>
+                    </div>
+                    <button id="logoutBtn" class="btn btn-secondary logout-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" stroke="currentColor" stroke-width="2"/>
+                            <polyline points="16 17 21 12 16 7" stroke="currentColor" stroke-width="2"/>
+                            <line x1="21" y1="12" x2="9" y2="12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Sign Out
+                    </button>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <nav class="dashboard-nav">
+                <button class="nav-tab active" data-tab="prospects">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    My Prospects
+                </button>
+                <button class="nav-tab" data-tab="appointments">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                        <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                        <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                        <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Appointments
+                </button>
+                <button class="nav-tab" data-tab="activity">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Activity
+                </button>
+                <button class="nav-tab" data-tab="performance">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <line x1="12" y1="20" x2="12" y2="10" stroke="currentColor" stroke-width="2"/>
+                        <line x1="18" y1="20" x2="18" y2="4" stroke="currentColor" stroke-width="2"/>
+                        <line x1="6" y1="20" x2="6" y2="16" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Performance
+                </button>
+                
+                <!-- Admin-only tabs -->
+                <button class="nav-tab admin-only" data-tab="users">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" stroke-width="2"/>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    User Management
+                </button>
+                <button class="nav-tab admin-only" data-tab="analytics">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                        <path d="M3 3v18h18" stroke="currentColor" stroke-width="2"/>
+                        <path d="M7 12l3-3 3 3 4-4" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    Analytics
+                </button>
+            </nav>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="dashboard-main">
+            <!-- Prospects Tab -->
+            <div id="prospectsTab" class="tab-content active">
+                <div class="tab-header">
+                    <h2 class="tab-title">My Prospects</h2>
+                    <div class="tab-actions">
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Statuses</option>
+                            <option value="New">New</option>
+                            <option value="Contacted">Contacted</option>
+                            <option value="Demo Scheduled">Demo Scheduled</option>
+                            <option value="Demo Completed">Demo Completed</option>
+                            <option value="Proposal Sent">Proposal Sent</option>
+                            <option value="Negotiating">Negotiating</option>
+                            <option value="Closed Won">Closed Won</option>
+                            <option value="Closed Lost">Closed Lost</option>
+                            <option value="Nurturing">Nurturing</option>
+                        </select>
+                        <select id="priorityFilter" class="filter-select">
+                            <option value="">All Priorities</option>
+                            <option value="Hot">Hot</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Prospects Table View -->
+                <div id="prospectsTableContainer" class="prospects-table-container">
+                    <table class="prospects-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Organization</th>
+                                <th>Function</th>
+                                <th>Discipline</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                                <th>Created</th>
+                            </tr>
+                        </thead>
+                        <tbody id="prospectsTableBody">
+                            <!-- Prospects rows will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Detailed Prospect Panel (Hidden by default) -->
+                <div id="prospectDetailPanel" class="prospect-detail-panel">
+                    <div class="panel-header">
+                        <h3 id="prospectName"></h3>
+                        <button class="close-panel" onclick="portal.closeProspectPanel()">×</button>
+                    </div>
+                    <div class="panel-content">
+                        <div class="prospect-info-section">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4>Contact Information</h4>
+                                <button id="editInfoBtn" class="btn-edit" onclick="portal.toggleEditMode()" style="background: #4a9eff; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">Edit</button>
+                            </div>
+                            <div class="info-grid" id="infoViewMode">
+                                <div class="info-item">
+                                    <label>Email:</label>
+                                    <span id="detailEmail"></span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Phone:</label>
+                                    <span id="detailPhone"></span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Organization:</label>
+                                    <span id="detailOrganization"></span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Function:</label>
+                                    <span id="detailFunction"></span>
+                                </div>
+                                <div class="info-item">
+                                    <label>Discipline:</label>
+                                    <span id="detailDiscipline"></span>
+                                <div class="info-item" style="grid-column: 1 / -1;">
+                                    <label>Notes:</label>
+                                    <span id="detailNotes"></span>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="info-grid" id="infoEditMode" style="display: none;">
+                                <div class="info-item">
+                                    <label>First Name:</label>
+                                    <input type="text" id="editFirstName" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Last Name:</label>
+                                    <input type="text" id="editLastName" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Email:</label>
+                                    <input type="email" id="editEmail" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Phone:</label>
+                                    <input type="tel" id="editPhone" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Organization:</label>
+                                    <input type="text" id="editOrganization" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Function:</label>
+                                    <input type="text" id="editFunction" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Discipline:</label>
+                                    <input type="text" id="editDiscipline" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item" style="grid-column: 1 / -1;">
+                                    <label>Notes:</label>
+                                    <textarea id="editNotes" class="edit-input" rows="3" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px; resize: vertical; min-height: 60px;"></textarea>
+                                </div>
+                                <div class="edit-actions" style="grid-column: 1 / -1; margin-top: 10px; display: flex; gap: 10px;">
+                                    <button class="btn-save" onclick="portal.saveProspectInfo()" style="padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: #27ae60; color: white;">Save</button>
+                                    <button class="btn-cancel" onclick="portal.cancelEdit()" style="padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: rgba(255, 255, 255, 0.1); color: #fff;">Cancel</button>
+                                </div>
+                        </div>
+
+                        <div class="prospect-status-section">
+                            <h4>Status & Priority</h4>
+                            <div class="status-controls">
+                                <select id="detailStatus" class="status-select">
+                                    <option value="New">New</option>
+                                    <option value="Contacted">Contacted</option>
+                                    <option value="Demo Scheduled">Demo Scheduled</option>
+                                    <option value="Demo Completed">Demo Completed</option>
+                                    <option value="Proposal Sent">Proposal Sent</option>
+                                    <option value="Negotiating">Negotiating</option>
+                                    <option value="Closed Won">Closed Won</option>
+                                    <option value="Closed Lost">Closed Lost</option>
+                                    <option value="Nurturing">Nurturing</option>
+                                </select>
+                                <select id="detailPriority" class="priority-select">
+                                    <option value="Hot">Hot</option>
+                                    <option value="High">High</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Low">Low</option>
+                                </select>
+                                <button class="btn-update" onclick="portal.updateProspectStatus()">Update Status</button>
+                            </div>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button class="action-btn btn-email" onclick="portal.emailProspect()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="2"/>
+                                    <polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Email
+                            </button>
+                            <button class="action-btn btn-text" onclick="portal.textProspect()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Text
+                            </button>
+                            <button class="action-btn btn-call" onclick="portal.callProspect()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Call
+                            </button>
+                            <button class="action-btn btn-demo" onclick="portal.scheduleDemo()">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="8" y1="2" x2="8" y2="6" stroke="currentColor" stroke-width="2"/>
+                                    <line x1="3" y1="10" x2="21" y2="10" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Schedule Demo
+                            </button>
+                        </div>
+
+                        <div class="activity-log-section">
+                            <h4>Activity Log</h4>
+                            <div id="activityLog" class="activity-log">
+                                <!-- Activity items will be loaded here -->
+                            </div>
+                            <div class="add-note">
+                                <textarea id="newNote" placeholder="Add a note..."></textarea>
+                                <button class="btn-add-note" onclick="portal.addNote()">Add Note</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Tab -->
+            <div id="appointmentsTab" class="tab-content">
+                <div class="tab-header">
+                    <h2 class="tab-title">My Appointments</h2>
+                    <button id="scheduleAppointmentBtn" class="btn btn-primary">Schedule Appointment</button>
+                </div>
+
+                <div class="appointments-calendar" id="appointmentsCalendar">
+                    <!-- Appointments will be loaded here -->
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading appointments...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Tab -->
+            <div id="activityTab" class="tab-content">
+                <div class="tab-header">
+                    <h2 class="tab-title">Recent Activity</h2>
+                </div>
+
+                <div class="activity-feed" id="activityFeed">
+                    <!-- Activity will be loaded here -->
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading activity...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance Tab -->
+            <div id="performanceTab" class="tab-content">
+                <div class="tab-header">
+                    <h2 class="tab-title">Performance Metrics</h2>
+                </div>
+
+                <div class="performance-metrics" id="performanceMetrics">
+                    <!-- Performance metrics will be loaded here -->
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading performance data...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin-only: User Management Tab -->
+            <div id="usersTab" class="tab-content admin-only" style="display:none;">
+                <div class="tab-header">
+                    <h2 class="tab-title">User Management</h2>
+                    <button class="btn btn-primary" id="addUserBtn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2"/>
+                            <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        Add New User
+                    </button>
+                </div>
+                
+                <!-- User Filters -->
+                <div class="filter-row">
+                    <select id="userTypeFilter" class="filter-select">
+                        <option value="all">All Users</option>
+                        <option value="Admin">Administrators</option>
+                        <option value="Sales Rep">Sales Representatives</option>
+                        <option value="Customer">Customers</option>
+                    </select>
+                    <input type="text" id="userSearchInput" class="search-input" placeholder="Search users...">
+                </div>
+                
+                <!-- Users Table -->
+                <div class="prospects-list" id="usersList">
+                    <div class="loading-state">
+                        <div class="loading-spinner"></div>
+                        <p>Loading users...</p>
+                    </div>
+                </div>
+                
+                <!-- User Stats -->
+                <div class="stats-row" style="margin-top: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalUsersCount">0</div>
+                        <div class="stat-label">Total Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalRepsCount">0</div>
+                        <div class="stat-label">Sales Reps</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalCustomersCount">0</div>
+                        <div class="stat-label">Customers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="activeUsersCount">0</div>
+                        <div class="stat-label">Active Today</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Admin-only: Analytics Tab -->
+            <div id="analyticsTab" class="tab-content admin-only" style="display:none;">
+                <div class="tab-header">
+                    <h2 class="tab-title">Platform Analytics</h2>
+                </div>
+                
+                <!-- Key Metrics -->
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalRevenue">$0</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalProspectsAnalytics">0</div>
+                        <div class="stat-label">Total Prospects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="conversionRate">0%</div>
+                        <div class="stat-label">Conversion Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avgDealSize">$0</div>
+                        <div class="stat-label">Avg Deal Size</div>
+                    </div>
+                </div>
+                
+                <!-- Sales Team Performance -->
+                <div class="analytics-section">
+                    <h3>Sales Team Performance</h3>
+                    <div class="prospects-list" id="teamPerformanceList">
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Loading performance data...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Prospect Detail Modal -->
+    <div id="prospectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="prospectModalTitle">Prospect Details</h2>
+                <button id="closeProspectModal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="prospectModalBody">
+                <!-- Prospect details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Activity Log Modal -->
+    <div id="activityModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Log Activity</h2>
+                <button id="closeActivityModal" class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="activityForm" class="activity-form">
+                    <input type="hidden" id="activityProspectId" name="prospect_id">
+                    
+                    <div class="form-field">
+                        <label for="activityType">Activity Type</label>
+                        <select id="activityType" name="activity_type" required class="form-input">
+                            <option value="">Select activity type</option>
+                            <option value="Call">Phone Call</option>
+                            <option value="Email">Email</option>
+                            <option value="Meeting">Meeting</option>
+                            <option value="Demo">Demo</option>
+                            <option value="Proposal">Proposal</option>
+                            <option value="Note">Note</option>
+                            <option value="Status Change">Status Change</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="activityDetails">Activity Details</label>
+                        <textarea id="activityDetails" name="activity_details" required class="form-input" rows="4" placeholder="Describe what happened during this interaction..."></textarea>
+                    </div>
+
+                    <div class="form-field">
+                        <label for="activityOutcome">Outcome</label>
+                        <input type="text" id="activityOutcome" name="outcome" class="form-input" placeholder="What was the result?">
+                    </div>
+
+                    <div class="form-field">
+                        <label for="nextAction">Next Action</label>
+                        <input type="text" id="nextAction" name="next_action" class="form-input" placeholder="What should happen next?">
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" id="cancelActivity" class="btn btn-secondary">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Log Activity</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/portal-app.js"></script>
+</body>
+</html>

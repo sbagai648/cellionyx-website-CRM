@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Field Test - Cellionyx</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+    <link rel="stylesheet" href="css/phone-flags-fixed.css">
+    <style>
+        body {
+            background: #1a1a1a;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 50px;
+        }
+        .test-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #4a90e2;
+            margin-bottom: 30px;
+        }
+        .form-field {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Phone Field Test</h1>
+        
+        <div class="form-field">
+            <label>Test Phone Input 1:</label>
+            <input type="tel" id="phone1" name="phone1" placeholder="Enter phone number">
+        </div>
+        
+        <div class="form-field">
+            <label>Test Phone Input 2:</label>
+            <input type="tel" id="phone2" name="phone2" placeholder="Enter phone number">
+        </div>
+        
+        <div class="form-field">
+            <label>Test Phone Input 3:</label>
+            <input type="tel" id="phone3" name="phone3" placeholder="Enter phone number">
+        </div>
+        
+        <p id="status">Initializing...</p>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const status = document.getElementById('status');
+            
+            // Test direct initialization
+            const phone1 = document.querySelector("#phone1");
+            const phone2 = document.querySelector("#phone2");
+            const phone3 = document.querySelector("#phone3");
+            
+            if (window.intlTelInput) {
+                const iti1 = window.intlTelInput(phone1, {
+                    initialCountry: "us",
+                    separateDialCode: true,
+                    preferredCountries: ["us", "ca", "gb"]
+                });
+                
+                const iti2 = window.intlTelInput(phone2, {
+                    initialCountry: "us",
+                    separateDialCode: true,
+                    preferredCountries: ["us", "ca", "gb"]
+                });
+                
+                const iti3 = window.intlTelInput(phone3, {
+                    initialCountry: "us",
+                    separateDialCode: true,
+                    preferredCountries: ["us", "ca", "gb"]
+                });
+                
+                status.textContent = '✅ All phone fields initialized successfully!';
+                status.style.color = '#4a90e2';
+            } else {
+                status.textContent = '❌ intlTelInput library not loaded!';
+                status.style.color = 'red';
+            }
+        });
+    </script>
+    <script src="js/phone-init-working.js"></script>
+</body>
+</html>

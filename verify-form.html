@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verify Cellionyx Form</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .status { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        button { 
+            background: #4a9eff; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            margin: 5px;
+        }
+        pre { background: #f4f4f4; padding: 10px; overflow: auto; }
+    </style>
+</head>
+<body>
+    <h1>Cellionyx Form Verification</h1>
+    
+    <button onclick="checkForm()">Check Form Fields</button>
+    <button onclick="checkJS()">Check JavaScript</button>
+    <button onclick="testSubmit()">Test Submit</button>
+    
+    <div id="results"></div>
+    
+    <script>
+        async function checkForm() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="status info">Checking form fields...</div>';
+            
+            try {
+                const response = await fetch('https://cellionyx-crm.web.app');
+                const html = await response.text();
+                
+                // Check for notes field
+                const hasNotes = html.includes('id="notes"');
+                const hasNotesLabel = html.includes('Additional Notes');
+                
+                // Check form structure
+                const formStart = html.indexOf('<form id="ctaForm"');
+                const formEnd = html.indexOf('</form>', formStart);
+                const formHTML = html.substring(formStart, formEnd);
+                
+                // Count fields
+                const inputCount = (formHTML.match(/input/g) || []).length;
+                const selectCount = (formHTML.match(/select/g) || []).length;
+                const textareaCount = (formHTML.match(/textarea/g) || []).length;
+                
+                results.innerHTML = `
+                    <div class="status ${hasNotes ? 'success' : 'error'}">
+                        Notes field: ${hasNotes ? '✓ Found' : '✗ Missing'}
+                    </div>
+                    <div class="status ${hasNotesLabel ? 'success' : 'error'}">
+                        Notes label: ${hasNotesLabel ? '✓ Found' : '✗ Missing'}
+                    </div>
+                    <div class="status info">
+                        Form contains: ${inputCount} inputs, ${selectCount} selects, ${textareaCount} textareas
+                    </div>
+                `;
+                
+                // Show a snippet of the form
+                if (!hasNotes) {
+                    const consentIndex = formHTML.indexOf('consent');
+                    const snippet = formHTML.substring(Math.max(0, consentIndex - 500), consentIndex + 200);
+                    results.innerHTML += `
+                        <div class="status info">
+                            <strong>Form snippet around consent field:</strong>
+                            <pre>${snippet.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</pre>
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                results.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function checkJS() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="status info">Checking JavaScript...</div>';
+            
+            try {
+                const response = await fetch('https://cellionyx-crm.web.app/js/main.v2.js');
+                const js = await response.text();
+                
+                // Check for label capturing
+                const hasUserTypeLabel = js.includes('userTypeLabel');
+                const hasAreaLabel = js.includes('areaOfInterestLabel');
+                const hasNotesField = js.includes("querySelector('#notes')");
+                
+                // Find form data collection
+                const formDataIndex = js.indexOf('const formData = {');
+                const formDataEnd = js.indexOf('};', formDataIndex);
+                const formDataSnippet = js.substring(formDataIndex, Math.min(formDataIndex + 1000, formDataEnd + 2));
+                
+                results.innerHTML = `
+                    <div class="status ${hasUserTypeLabel ? 'success' : 'error'}">
+                        userTypeLabel: ${hasUserTypeLabel ? '✓ Found' : '✗ Missing'}
+                    </div>
+                    <div class="status ${hasAreaLabel ? 'success' : 'error'}">
+                        areaOfInterestLabel: ${hasAreaLabel ? '✓ Found' : '✗ Missing'}
+                    </div>
+                    <div class="status ${hasNotesField ? 'success' : 'error'}">
+                        Notes selector: ${hasNotesField ? '✓ Found' : '✗ Missing'}
+                    </div>
+                    <div class="status info">
+                        <strong>FormData collection:</strong>
+                        <pre>${formDataSnippet.substring(0, 500)}</pre>
+                    </div>
+                `;
+                
+            } catch (error) {
+                results.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        async function testSubmit() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<div class="status info">Testing submission...</div>';
+            
+            const testData = {
+                firstName: 'Test',
+                lastName: 'User',
+                email: 'test' + Date.now() + '@example.com',
+                phone: '555-1234',
+                country: 'United States',
+                userType: 'physical-therapist',
+                userTypeLabel: 'Physical Therapist',
+                areaOfInterest: 'injury-recovery',
+                areaOfInterestLabel: 'Injury Recovery',
+                notes: 'Test note: ' + new Date().toISOString(),
+                consent: true
+            };
+            
+            try {
+                const response = await fetch('https://us-central1-cellionyx-crm.cloudfunctions.net/api/public/submit-form', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(testData)
+                });
+                
+                const result = await response.json();
+                
+                results.innerHTML = `
+                    <div class="status ${response.ok ? 'success' : 'error'}">
+                        Status: ${response.status} ${response.ok ? '✓' : '✗'}
+                    </div>
+                    <div class="status info">
+                        <strong>Response:</strong>
+                        <pre>${JSON.stringify(result, null, 2)}</pre>
+                    </div>
+                `;
+                
+                if (result.prospectId) {
+                    results.innerHTML += `
+                        <div class="status success">
+                            Prospect created: ${result.prospectId}
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                results.innerHTML = `<div class="status error">Error: ${error.message}</div>`;
+            }
+        }
+        
+        // Auto-check on load
+        window.onload = () => {
+            checkForm();
+            setTimeout(checkJS, 1000);
+        };
+    </script>
+</body>
+</html>

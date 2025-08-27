@@ -188,8 +188,11 @@
                     </div>
                     <div class="panel-content">
                         <div class="prospect-info-section">
-                            <h4>Contact Information</h4>
-                            <div class="info-grid">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <h4>Contact Information</h4>
+                                <button id="editInfoBtn" class="btn-edit" onclick="portal.toggleEditMode()" style="background: #4a9eff; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 600;">Edit</button>
+                            </div>
+                            <div class="info-grid" id="infoViewMode">
                                 <div class="info-item">
                                     <label>Email:</label>
                                     <span id="detailEmail"></span>
@@ -209,6 +212,48 @@
                                 <div class="info-item">
                                     <label>Discipline:</label>
                                     <span id="detailDiscipline"></span>
+                                </div>
+                                <div class="info-item" style="grid-column: 1 / -1;">
+                                    <label>Notes:</label>
+                                    <span id="detailNotes"></span>
+                                </div>
+                            </div>
+                            <div class="info-grid" id="infoEditMode" style="display: none;">
+                                <div class="info-item">
+                                    <label>First Name:</label>
+                                    <input type="text" id="editFirstName" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Last Name:</label>
+                                    <input type="text" id="editLastName" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Email:</label>
+                                    <input type="email" id="editEmail" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Phone:</label>
+                                    <input type="tel" id="editPhone" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Organization:</label>
+                                    <input type="text" id="editOrganization" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Function:</label>
+                                    <input type="text" id="editFunction" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item">
+                                    <label>Discipline:</label>
+                                    <input type="text" id="editDiscipline" class="edit-input" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px;">
+                                </div>
+                                <div class="info-item" style="grid-column: 1 / -1;">
+                                    <label>Notes:</label>
+                                    <textarea id="editNotes" class="edit-input" rows="3" style="width: 100%; padding: 8px 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; color: #fff; font-size: 14px; resize: vertical; min-height: 60px;"></textarea>
+                                </div>
+                                <div class="edit-actions" style="grid-column: 1 / -1; margin-top: 10px; display: flex; gap: 10px;">
+                                    <button class="btn-save" onclick="portal.saveProspectInfo()" style="padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: #27ae60; color: white;">Save</button>
+                                    <button class="btn-cancel" onclick="portal.cancelEdit()" style="padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; background: rgba(255, 255, 255, 0.1); color: #fff;">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -484,5 +529,6 @@
     </div>
 
     <script src="js/portal-app.js"></script>
+    <script src="js/edit-functions.js"></script>
 </body>
 </html>

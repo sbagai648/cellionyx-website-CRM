@@ -1,0 +1,146 @@
+    <div id="ctaModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-height: 90vh; overflow-y: auto; margin: 20px auto;">
+            <div class="modal-header">
+                <h2 id="ctaModalTitle">Request a Demo</h2>
+                <p id="ctaModalSubtitle" style="margin: 5px 0; color: #999;">See Cellionyx technology in action</p>
+                <span class="close" id="closeModal">&times;</span>
+            </div>
+            <form id="ctaForm" class="cta-form" style="padding: 20px;">
+                <!-- Hidden fields -->
+                <input type="hidden" name="ctaType" id="ctaType" value="demo">
+                <input type="hidden" name="page" value="index">
+                
+                <div class="form-row">
+                    <div class="form-field">
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name *" required class="form-input">
+                    </div>
+                    <div class="form-field">
+                        <input type="text" id="lastName" name="lastName" placeholder="Last Name *" required class="form-input">
+                    </div>
+                </div>
+                
+                <div class="form-field">
+                    <input type="email" id="email" name="email" placeholder="Email Address *" required class="form-input">
+                </div>
+                
+                <div class="form-field">
+                    <input type="tel" id="phone" name="phone" placeholder="Phone Number" class="form-input">
+                </div>
+                
+                <div class="form-field">
+                    <select id="country" name="country" required class="form-input">
+                        <option value="">Select your country *</option>
+                        <option value="United States">United States</option>
+                        <option value="Canada">Canada</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Germany">Germany</option>
+                        <option value="France">France</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Finland">Finland</option>
+                        <option value="Australia">Australia</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Japan">Japan</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="UAE">UAE</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="India">India</option>
+                        <option value="China">China</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <input type="text" id="state" name="state" placeholder="State/Province" class="form-input">
+                    <small style="color: #999;">e.g., California, Ontario, etc.</small>
+                </div>
+                
+                <div class="form-field">
+                    <input type="text" id="city" name="city" placeholder="City" class="form-input">
+                    <small style="color: #999;">e.g., Los Angeles, Toronto, etc.</small>
+                </div>
+                
+                <div class="form-field">
+                    <select id="userType" name="userType" required class="form-input">
+                        <option value="">I am a: *</option>
+                        <option value="Healthcare Professional">Healthcare Professional</option>
+                        <option value="Physical Therapist">Physical Therapist</option>
+                        <option value="Sports Medicine Doctor">Sports Medicine Doctor</option>
+                        <option value="Athletic Trainer">Athletic Trainer</option>
+                        <option value="Professional Athlete">Professional Athlete</option>
+                        <option value="Amateur Athlete">Amateur Athlete</option>
+                        <option value="Coach">Coach</option>
+                        <option value="Team Manager">Team Manager</option>
+                        <option value="Gym Owner">Gym Owner</option>
+                        <option value="Fitness Professional">Fitness Professional</option>
+                        <option value="Researcher">Researcher</option>
+                        <option value="Individual Patient">Individual Patient</option>
+                        <option value="Veterinarian">Veterinarian</option>
+                        <option value="Investor">Investor</option>
+                        <option value="Media/Press">Media/Press</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <input type="text" id="organization" name="organization" placeholder="Organization/Team (if applicable)" class="form-input">
+                    <small style="color: #999;">Medical practice, sports team, gym, etc.</small>
+                </div>
+                
+                <div class="form-field">
+                    <select id="areaOfInterest" name="areaOfInterest" class="form-input">
+                        <option value="">Primary Area of Interest</option>
+                        <option value="Sports Performance">Sports Performance</option>
+                        <option value="Injury Recovery">Injury Recovery</option>
+                        <option value="Pain Management">Pain Management</option>
+                        <option value="Post-Surgical Recovery">Post-Surgical Recovery</option>
+                        <option value="Muscle Rehabilitation">Muscle Rehabilitation</option>
+                        <option value="Wound Healing">Wound Healing</option>
+                        <option value="Athletic Training">Athletic Training</option>
+                        <option value="Physical Therapy">Physical Therapy</option>
+                        <option value="Research Applications">Research Applications</option>
+                        <option value="Veterinary Medicine">Veterinary Medicine</option>
+                        <option value="General Wellness">General Wellness</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <select id="intendedUse" name="intendedUse" class="form-input">
+                        <option value="">Intended Use</option>
+                        <option value="Clinical Practice">Clinical Practice</option>
+                        <option value="Sports Training Facility">Sports Training Facility</option>
+                        <option value="Rehabilitation Center">Rehabilitation Center</option>
+                        <option value="Hospital/Medical Center">Hospital/Medical Center</option>
+                        <option value="Research Institution">Research Institution</option>
+                        <option value="Professional Sports Team">Professional Sports Team</option>
+                        <option value="Personal Use">Personal Use</option>
+                        <option value="Veterinary Clinic">Veterinary Clinic</option>
+                        <option value="Fitness Center">Fitness Center</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-field">
+                    <textarea id="additionalInfo" name="additionalInfo" rows="3" placeholder="Additional Information or Specific Questions" class="form-input" style="resize: vertical;"></textarea>
+                    <small style="color: #999;">Tell us about your specific needs, condition, sport, or questions about Cytomotion™...</small>
+                </div>
+                
+                <div class="form-field">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer;">
+                <div class="form-field">
+                    <label for="notes" style="color: #ccc; font-size: 14px; margin-bottom: 5px; display: block;">Additional Notes (Optional)</label>
+                    <textarea id="notes" name="notes" class="form-input" rows="3" placeholder="Tell us more about your needs..." style="resize: vertical; min-height: 80px;"></textarea>
+                </div>
+
+                        <input type="checkbox" id="consent" name="consent" required style="margin-top: 3px;">

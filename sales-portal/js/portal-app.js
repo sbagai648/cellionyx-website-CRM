@@ -1031,3 +1031,46 @@ window.addEventListener('unhandledrejection', (event) => {
         portal.showError('An unexpected error occurred. Please refresh the page.');
     }
 });
+// Update showProspectDetail to populate new fields
+if (typeof portal !== 'undefined' && portal.showProspectDetail) {
+    const originalShowProspectDetail = portal.showProspectDetail.bind(portal);
+    portal.showProspectDetail = function(prospectId, row) {
+        originalShowProspectDetail(prospectId, row);
+        
+        const prospect = this.currentProspect;
+        if (!prospect) return;
+        
+        // Update display fields with labels
+        const functionElem = document.getElementById('detailFunction');
+        if (functionElem) {
+            functionElem.textContent = prospect.function_label || prospect.function_role || 'Not specified';
+        }
+        
+        const disciplineElem = document.getElementById('detailDiscipline');
+        if (disciplineElem) {
+            disciplineElem.textContent = prospect.discipline_label || prospect.discipline || 'Not specified';
+        }
+        
+        const notesElem = document.getElementById('detailNotes');
+        if (notesElem) {
+            notesElem.textContent = prospect.notes || 'No notes';
+        }
+        
+        // Populate edit fields
+        const editFields = {
+            'editFirstName': prospect.first_name || '',
+            'editLastName': prospect.last_name || '',
+            'editEmail': prospect.email || '',
+            'editPhone': prospect.phone || '',
+            'editOrganization': prospect.organization || '',
+            'editFunction': prospect.function_label || prospect.function_role || '',
+            'editDiscipline': prospect.discipline_label || prospect.discipline || '',
+            'editNotes': prospect.notes || ''
+        };
+        
+        for (const [id, value] of Object.entries(editFields)) {
+            const elem = document.getElementById(id);
+            if (elem) elem.value = value;
+        }
+    };
+}

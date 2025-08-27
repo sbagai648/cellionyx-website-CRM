@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Form Test - Cellionyx</title>
+</head>
+<body>
+    <h1>Redirecting to Cellionyx form...</h1>
+    <p>The form will open automatically. Check the console for data being submitted.</p>
+    
+    <script>
+        // Redirect to the live site
+        window.location.href = 'https://cellionyx-crm.web.app';
+        
+        // Instructions for manual testing
+        console.log('%c=== CELLIONYX FORM TEST INSTRUCTIONS ===', 'color: blue; font-size: 16px; font-weight: bold');
+        console.log('%c1. Click any "Request a Demo" button', 'color: green; font-size: 14px');
+        console.log('%c2. Fill out the form with test data', 'color: green; font-size: 14px');
+        console.log('%c3. Check if you see:', 'color: green; font-size: 14px');
+        console.log('   - Additional Notes field (optional)');
+        console.log('   - All dropdowns working');
+        console.log('   - Form should NOT clear if you leave required fields empty');
+        console.log('%c4. Submit the form and check console for:', 'color: green; font-size: 14px');
+        console.log('   - userTypeLabel being captured');
+        console.log('   - areaOfInterestLabel being captured');
+        console.log('   - notes field being sent');
+        console.log('%c5. Check the sales portal to see if the prospect appears with all labels', 'color: green; font-size: 14px');
+    </script>
+</body>
+</html>

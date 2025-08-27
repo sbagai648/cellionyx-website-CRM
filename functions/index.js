@@ -673,7 +673,6 @@ app.post('/public/submit-form', async (req, res) => {
       organization,
       areaOfInterest,
       intendedUse,
-      additionalInfo,
       functionRole, // backwards compatibility
       discipline, // backwards compatibility
       ctaType = 'demo',
@@ -739,7 +738,6 @@ app.post('/public/submit-form', async (req, res) => {
         intendedUse: intendedUse || null,
         
         // Additional Info
-        additionalInfo: additionalInfo || null,
         
         // Lead Info
         leadSource: ctaType === 'waitlist' ? 'Waitlist' : 'Demo Request',
